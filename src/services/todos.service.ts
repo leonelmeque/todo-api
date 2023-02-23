@@ -1,7 +1,7 @@
-import db from '../db/todos.json';
-import { Todo, TodoStatus } from '../types';
-import { generateId } from '../utils/generateID';
-import { writeToDB } from '../utils/writedb';
+import db from "../db/todos.json";
+import { Todo, TodoStatus } from "../types";
+import { generateId } from "../utils/generateID";
+import { writeToDB } from "../utils/writedb";
 
 export const getTodos = () => db;
 
@@ -10,7 +10,7 @@ export const getTodoById = (id: string) => {
 
   const todo = db.todos.find((todo) => todo.id === id);
 
-  if (!todo) throw new Error('Todo was not found');
+  if (!todo) throw new Error("Todo was not found");
 
   return todo;
 };
@@ -44,7 +44,7 @@ export const updateTodos = (id: string, payload: Todo) => {
   };
   const temp = db;
 
-  writeToDB('todos', JSON.stringify(temp));
+  writeToDB("todos", JSON.stringify(temp));
 
   return db.todos[index];
 };
@@ -59,14 +59,19 @@ export const saveTodo = (payload: Todo) => {
 
   const temp = db;
 
-  writeToDB('todos', JSON.stringify(temp));
+  writeToDB("todos", JSON.stringify(temp));
 };
 
 export const deleteTodo = (id: string) => {
   if (!db.todos.length) return;
 
   const temp = db.todos.filter((todo) => todo.id !== id);
+
+  if (!temp.length) return null;
+
   db.todos = temp;
 
-  writeToDB('todos', JSON.stringify(db));
+  writeToDB("todos", JSON.stringify(db));
+
+  return temp.findIndex((todo) => todo.id === id) !== -1;
 };

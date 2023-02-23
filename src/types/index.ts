@@ -6,10 +6,10 @@ interface CommonKeys {
 }
 
 export enum TodoStatus {
-  ON_HOLD = 'ON_HOLD',
-  COMPLETED = 'COMPLETED',
-  ON_GOING = 'ON_GOING',
-  TODO = 'TODO',
+  ON_HOLD = "ON_HOLD",
+  COMPLETED = "COMPLETED",
+  ON_GOING = "ON_GOING",
+  TODO = "TODO",
 }
 
 export interface Todo extends CommonKeys {
@@ -32,8 +32,8 @@ export interface Timeline {
 }
 
 interface Person {
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   birthdate: string;
 }
 
@@ -42,5 +42,7 @@ export interface User<P = {}> extends Person {
   username: string;
   avatar: string;
   preferences?: P;
-  todos: string[] | [];
+  todos: string[];
 }
+
+export type BasicUserInfo = Pick<User<any>, "id" | "username" | "avatar">;
