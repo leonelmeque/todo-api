@@ -40,6 +40,8 @@ interface Person {
 export interface User<P = {}> extends Person {
   id: string;
   username: string;
+  email: string;
+  password: string;
   avatar: string;
   preferences?: P;
   todos: string[];

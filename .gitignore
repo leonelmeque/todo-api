@@ -1,2 +1,6 @@
 node_modules
 dist
+firebase.json
+serviceAccountKey.json
+.env.local
+.env
