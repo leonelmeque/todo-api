@@ -3,12 +3,50 @@ import admin from "firebase-admin";
 import { User } from "../types";
 import { NextFunction, Request, Response } from "express";
 
+export const createUserCustomToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const uid = req.body.id as string;
+
+    const customToken = await getAuth().createCustomToken(uid);
+
+    res.status(200).json({
+      message: "Custom token created",
+      result: {
+        customToken,
+      },
+    });
+
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const revokeUserCustomToken = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const uid = req.params.id as string;
+
+    await getAuth().revokeRefreshTokens(uid);
+
+    res.status(200).json({
+      message: "Custom token revoked",
+      result: {},
+    });
+
+  } catch (error) {
+    next(error);
+  }
+ }
+
 export const getAuthUser = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const id = req.params.id as string;
+  const id = req.params.id;
 
   try {
     const snapshot = await admin.firestore().collection("users").doc(id).get();
@@ -37,6 +75,7 @@ export const createUser = async (
 ) => {
   const user = req.body?.user as Partial<User<any>>;
   const payload: Partial<User> = {
+    id: user.id,
     email: user.email,
     username: user.username,
     firstname: "",
@@ -48,17 +87,10 @@ export const createUser = async (
   };
 
   try {
-    const userRecord = await getAuth().createUser({
-      email: payload.email,
-      password: payload.password,
-      disabled: false,
-      emailVerified: false,
-    });
-
     await admin
       .firestore()
       .collection("users")
-      .doc(userRecord.uid)
+      .doc(payload.id as string)
       .set({
         ...payload,
       });
@@ -67,7 +99,6 @@ export const createUser = async (
       message: "User created",
       result: {
         ...payload,
-        id: userRecord.uid,
       },
     });
   } catch (error: any) {
@@ -86,7 +117,7 @@ export const updateUser = async (
     const user = req.body.user as Partial<User<any>>;
 
     await admin.firestore().collection("users").doc(uid).update(user);
-   
+
     res.status(200).json({
       message: "User updated",
     });
