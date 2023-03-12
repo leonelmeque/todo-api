@@ -1,79 +1,166 @@
-import db from '../db/timeline.json';
-import { TimelineEvent, Timeline } from '../types';
-import { writeToDB } from '../utils/writedb';
+import admin from "firebase-admin";
+import { Request, Response, NextFunction } from "express";
 
-const timeline = db.timeline as Timeline[];
-
-export const getTimelineById = (id: string): Timeline | undefined => {
-  if (!timeline.length) return;
-
-  const _timeline = timeline.find((timeline) => timeline.id === id);
-
-  if (!_timeline) throw new Error('Timeline was not found');
-
-  return _timeline;
-};
-
-export const getTimelineEventById = (
-  id: string,
-  eventId: string
-): TimelineEvent | undefined => {
-  if (!timeline.length) return;
-
-  const index = timeline.findIndex((timeline) => timeline.id === id);
-
-  if (!timeline[index].events) return;
-
-  return timeline[index].events.find((event) => event.id === eventId);
-};
-
-export const updateTimelineEvent = (
-  id: string,
-  eventId: string,
-  payload: any
+export const generateTimeline = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
 ) => {
-  if (!timeline.length) return;
+  try {
+    const id = req.params.id;
+    await admin.firestore().collection("timelines").doc(id).create({});
+    const ref = await admin
+      .firestore()
+      .collection("timelines")
+      .doc(id)
+      .collection("events")
+      .add({});
 
-  const index = timeline.findIndex((todo) => todo.id === id);
-  if (index < 0) return;
-
-  const eventIndex = timeline[index].events.findIndex(
-    (timelineEvent) => timelineEvent.id === eventId
-  );
-
-  if (!eventIndex) return;
-
-  timeline[index].events[eventIndex] = { eventId, ...payload };
-
-  writeToDB('timeline', JSON.stringify(db));
+    res.status(200).json({
+      message: "New Timeline Generated",
+      result: {
+        id: ref.id,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const saveTimelineEvent = (id: string, payload: TimelineEvent) => {
-  if (!timeline.length) return;
+export const getTimelineEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const snapshot = await admin
+      .firestore()
+      .collection("timelines")
+      .doc(id)
+      .collection("events")
+      .get();
+    const events = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-  const index = timeline.findIndex((timeline) => timeline.id === id);
-
-  if (index < 0) return;
-
-  timeline[index].events.push(payload);
-
-  const temp = db;
-
-  writeToDB('timeline', JSON.stringify(temp));
+    res.status(200).json({
+      message: "Events found",
+      result: {
+        events,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
 };
 
-export const deleteTimelineEvent = (id: string, eventId: string) => {
-  if (!timeline.length) return;
+export const saveTimelineEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const events = req.body.events as any[];
 
-  const index = timeline.findIndex((timeline) => timeline.id === id);
+    const batch = admin.firestore().batch();
 
-  if (index < 0) return;
+    events.forEach((event) => {
+      const ref = admin
+        .firestore()
+        .collection("timelines")
+        .doc(id)
+        .collection("events")
+        .doc();
+      batch.set(ref, event);
+    });
 
-  const temp = timeline[index].events.filter((event) => event.id !== eventId);
+    await batch.commit();
 
-  timeline[index].events = temp;
-
-  if (!temp.length) return;
-
-  writeToDB('timeline', JSON.stringify(db));
+    res.status(200).json({
+      message: "Events saved",
+      result: {},
+    });
+  } catch (error) {
+    next(error);
+  }
 };
+
+export const updateTimelineEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const events = req.body.events as any[];
+
+    const batch = admin.firestore().batch();
+
+    events.forEach((event) => {
+      const { id: _id, ...rest } = event;
+
+      const ref = admin
+        .firestore()
+        .collection("timelines")
+        .doc(id)
+        .collection("events")
+        .doc(event.id);
+
+      batch.update(ref, rest);
+    });
+
+    await batch.commit();
+
+    res.status(200).json({
+      message: "Events updated",
+      result: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteTimelineEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const id = req.params.id;
+    const events = req.body.events as any[];
+
+    const batch = admin.firestore().batch();
+
+    events.forEach((event) => {
+      const ref = admin
+        .firestore()
+        .collection("timelines")
+        .doc(id)
+        .collection("events")
+        .doc(event.id);
+      batch.delete(ref);
+    });
+
+    await batch.commit();
+
+    res.status(200).json({
+      message: "Events deleted",
+      result: {},
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const deleteTimeline = async ( req: Request, res: Response, next: NextFunction ) => { 
+  try { 
+    const id = req.params.id; 
+    await admin.firestore().collection('timelines').doc(id).delete(); 
+    res.status(200).json({ 
+      message: 'Timeline deleted', 
+      result: {}, 
+    }); 
+  } catch (error) { 
+    next(error); 
+  } 
+}
