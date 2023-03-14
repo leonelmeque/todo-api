@@ -1,3 +1,4 @@
+import 'colors';
 import { NextFunction, Request, Response } from 'express';
 
 enum MethodColors {

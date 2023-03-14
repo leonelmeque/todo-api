@@ -1,77 +1,120 @@
-import db from "../db/todos.json";
-import { Todo, TodoStatus } from "../types";
-import { generateId } from "../utils/generateID";
-import { writeToDB } from "../utils/writedb";
+import { NextFunction, Request, Response } from "express";
+import admin from "firebase-admin";
+import { Todo } from "../types";
 
-export const getTodos = () => db;
+export const getTodoById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const uid = req.params.id;
+    const ref = await admin.firestore().collection("todos").doc(uid);
 
-export const getTodoById = (id: string) => {
-  if (!db.todos.length) return;
+    const todo = (await ref.get()).data();
 
-  const todo = db.todos.find((todo) => todo.id === id);
+    if (!todo) res.status(404).json({ message: "Todo not found", result: {} });
 
-  if (!todo) throw new Error("Todo was not found");
-
-  return todo;
-};
-
-export const getAllTodosById = (id: string[]) => {
-  if (!db.todos.length) return;
-
-  const temp: Todo[] = [];
-
-  for (let uid of id) {
-    const todo = db.todos.find((todo) => todo.id === uid);
-
-    if (todo) {
-      temp.push({
-        ...todo,
-        status: todo.status as TodoStatus,
-      });
-    }
+    res.status(200).json({
+      message: "Todo found",
+      result: {
+        todo,
+      },
+    });
+  } catch (e) {
+    next(e);
   }
-
-  return temp;
 };
 
-export const updateTodos = (id: string, payload: Todo) => {
-  if (!db.todos.length) return;
+export const getMultipleTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const multipleIDs = req.body.uid as string[];
 
-  const index = db.todos.findIndex((todo) => todo.id === id);
-  db.todos[index] = {
-    ...db.todos[index],
-    ...payload,
-  };
-  const temp = db;
+    let todos: Todo[] = [];
 
-  writeToDB("todos", JSON.stringify(temp));
+    const snapshot = await admin.firestore().collection("todos").get();
 
-  return db.todos[index];
+    snapshot.docs.forEach(async (doc) => {
+      const todo = { id: doc.id, ...(doc.data() as Omit<Todo, "id">) };
+      multipleIDs.includes(doc.id) && (todos as typeof todo[]).push(todo);
+    });
+
+    if (!todos)
+      res.status(404).json({ message: "Todos not found", result: {} });
+
+    res.status(200).json({
+      message: "Todos found",
+      result: {
+        todos,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
 };
 
-export const saveTodo = (payload: Todo) => {
-  const { id, ...rest } = payload;
+export const updateTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const uid = req.params.id;
+    const todoFields = req.body.todo;
 
-  db.todos.push({
-    id: generateId(),
-    ...rest,
-  });
+    await admin.firestore().collection("todos").doc(uid).update(todoFields);
 
-  const temp = db;
-
-  writeToDB("todos", JSON.stringify(temp));
+    res.status(200).json({
+      message: "Todo updated",
+      result: {},
+    });
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
 };
 
-export const deleteTodo = (id: string) => {
-  if (!db.todos.length) return;
+export const saveTodos = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const newTodo = req.body.todo;
+    const ref = await admin.firestore().collection("todos").doc();
+    await ref.create(newTodo);
+    
+    res.status(201).json({
+      message: "Todo saved",
+      result: {
+        id: ref.id,
+        ...newTodo,
+      },
+    });
+  } catch (e) {
+    next(e);
+  }
+};
 
-  const temp = db.todos.filter((todo) => todo.id !== id);
+export const deleteTodo = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const uid = req.params.id;
 
-  if (!temp.length) return null;
+    await admin.firestore().collection("todos").doc(uid).delete();
 
-  db.todos = temp;
-
-  writeToDB("todos", JSON.stringify(db));
-
-  return temp.findIndex((todo) => todo.id === id) !== -1;
+    res.status(200).json({
+      message: "Todo deleted",
+      result: {},
+    });
+  } catch (e) {
+    next(e);
+  }
 };
