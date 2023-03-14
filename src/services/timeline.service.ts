@@ -34,12 +34,14 @@ export const getTimelineEvents = async (
 ) => {
   try {
     const id = req.params.id;
+
     const snapshot = await admin
       .firestore()
       .collection("timelines")
       .doc(id)
       .collection("events")
       .get();
+
     const events = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
     res.status(200).json({
@@ -155,7 +157,9 @@ export const deleteTimelineEvents = async (
 export const deleteTimeline = async ( req: Request, res: Response, next: NextFunction ) => { 
   try { 
     const id = req.params.id; 
+
     await admin.firestore().collection('timelines').doc(id).delete(); 
+    
     res.status(200).json({ 
       message: 'Timeline deleted', 
       result: {}, 
