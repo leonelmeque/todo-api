@@ -1,6 +1,6 @@
 {
   "name": "@todo/backend",
-  "version": "1.0.0",
+  "version": "0.10.15",
   "description": "Timelin backend",
   "main": "./dist/index.js",
   "author": "Leonel Meque",

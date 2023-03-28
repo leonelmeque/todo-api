@@ -19,13 +19,16 @@ export const createUserCustomToken = async (
         customToken,
       },
     });
-
   } catch (error) {
     next(error);
   }
 };
 
-export const revokeUserCustomToken = async (req: Request, res: Response, next: NextFunction) => {
+export const revokeUserCustomToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const uid = req.params.id as string;
 
@@ -35,11 +38,10 @@ export const revokeUserCustomToken = async (req: Request, res: Response, next: N
       message: "Custom token revoked",
       result: {},
     });
-
   } catch (error) {
     next(error);
   }
- }
+};
 
 export const getAuthUser = async (
   req: Request,
@@ -113,15 +115,16 @@ export const updateUser = async (
   next: NextFunction
 ) => {
   try {
-    const uid = req.query.uid as string;
+    const uid = req.params.id as string;
     const user = req.body.user as Partial<User<any>>;
-
+    console.log(req.body.user);
     await admin.firestore().collection("users").doc(uid).update(user);
 
     res.status(200).json({
       message: "User updated",
     });
   } catch (error) {
+    console.error(error);
     next(error);
   }
 };
