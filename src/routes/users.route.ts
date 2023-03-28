@@ -27,6 +27,6 @@ router.delete("/revoke-custom-token/:id", revokeUserCustomToken);
 router.delete("/remove", deleteUser);
 
 // update user from firebase
-router.put("/update", updateUser);
+router.put("/update/:id", updateUser);
 
 export default router;

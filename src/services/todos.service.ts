@@ -18,7 +18,10 @@ export const getTodoById = async (
     res.status(200).json({
       message: "Todo found",
       result: {
-        todo,
+        todo: {
+          id: uid,
+          ...todo,
+        },
       },
     });
   } catch (e) {
@@ -32,7 +35,7 @@ export const getMultipleTodos = async (
   next: NextFunction
 ) => {
   try {
-    const multipleIDs = req.body.uid as string[];
+    const multipleIDs = (req.body.uid as string[]) || [];
 
     let todos: Todo[] = [];
 
@@ -53,6 +56,7 @@ export const getMultipleTodos = async (
       },
     });
   } catch (e) {
+    console.log(e);
     next(e);
   }
 };
@@ -87,7 +91,7 @@ export const saveTodos = async (
     const newTodo = req.body.todo;
     const ref = await admin.firestore().collection("todos").doc();
     await ref.create(newTodo);
-    
+
     res.status(201).json({
       message: "Todo saved",
       result: {
