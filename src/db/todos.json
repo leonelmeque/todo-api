@@ -1,0 +1,82 @@
+[
+  {
+    "uuid": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "name": "Buy Groceries",
+    "description": "Purchase fruits, vegetables, and dairy products",
+    "creationDate": 1698864000,
+    "creator": "b7e23ec2-07f2-49a5-b663-99b8a52a4627",
+    "restrictedTo": ["b7e23ec2-07f2-49a5-b663-99b8a52a4627", "9b49c8e8-6c7a-4f19-8d75-8c6b9d1a33b3"]
+  },
+  {
+    "uuid": "e47ac11b-58cc-4372-a567-0e02b2c3d480",
+    "name": "Finish Project Report",
+    "description": "Complete the final report for the XYZ project",
+    "creationDate": 1698950400,
+    "creator": "d1c0d5a2-5c2a-45c1-90b2-617d0502a19f",
+    "restrictedTo": ["d1c0d5a2-5c2a-45c1-90b2-617d0502a19f", "c0e6458c-8462-4b5f-8bfc-f4a47810c267"]
+  },
+  {
+    "uuid": "d47ac12b-58cc-4372-a567-0e02b2c3d481",
+    "name": "Schedule Meeting",
+    "description": "Arrange a meeting with the marketing team",
+    "creationDate": 1699036800,
+    "creator": "7d8f9a8b-3a2b-40b1-91ba-45e564839129",
+    "restrictedTo": ["7d8f9a8b-3a2b-40b1-91ba-45e564839129", "aad3f4ec-8f62-42f4-8bc4-3f876e736f23"]
+  },
+  {
+    "uuid": "c47ac13b-58cc-4372-a567-0e02b2c3d482",
+    "name": "Update Website",
+    "description": "Revise the content on the homepage and about us page",
+    "creationDate": 1699123200,
+    "creator": "9b49c8e8-6c7a-4f19-8d75-8c6b9d1a33b3",
+    "restrictedTo": ["9b49c8e8-6c7a-4f19-8d75-8c6b9d1a33b3", "b7e23ec2-07f2-49a5-b663-99b8a52a4627"]
+  },
+  {
+    "uuid": "b47ac14b-58cc-4372-a567-0e02b2c3d483",
+    "name": "Prepare Presentation",
+    "description": "Create slides for the quarterly business review",
+    "creationDate": 1699209600,
+    "creator": "c0e6458c-8462-4b5f-8bfc-f4a47810c267",
+    "restrictedTo": ["c0e6458c-8462-4b5f-8bfc-f4a47810c267", "d1c0d5a2-5c2a-45c1-90b2-617d0502a19f"]
+  },
+  {
+    "uuid": "a47ac15b-58cc-4372-a567-0e02b2c3d484",
+    "name": "Client Follow-up",
+    "description": "Call and email recent clients for feedback",
+    "creationDate": 1699296000,
+    "creator": "aad3f4ec-8f62-42f4-8bc4-3f876e736f23",
+    "restrictedTo": ["aad3f4ec-8f62-42f4-8bc4-3f876e736f23", "7d8f9a8b-3a2b-40b1-91ba-45e564839129"]
+  },
+  {
+    "uuid": "947ac16b-58cc-4372-a567-0e02b2c3d485",
+    "name": "Organize Files",
+    "description": "Sort and archive old project files",
+    "creationDate": 1699382400,
+    "creator": "b7e23ec2-07f2-49a5-b663-99b8a52a4627",
+    "restrictedTo": ["e612b58a-2d72-4b0d-822b-49e8b2d4a03e", "b7e23ec2-07f2-49a5-b663-99b8a52a4627"]
+  },
+  {
+    "uuid": "847ac17b-58cc-4372-a567-0e02b2c3d486",
+    "name": "Team Building Activity",
+    "description": "Plan a team-building activity for the department",
+    "creationDate": 1699468800,
+    "creator": "df13e37a-4c5c-4b1e-8ec7-2f6173e4e5ab",
+    "restrictedTo": ["df13e37a-4c5c-4b1e-8ec7-2f6173e4e5ab", "d1c0d5a2-5c2a-45c1-90b2-617d0502a19f"]
+  },
+  {
+    "uuid": "747ac18b-58cc-4372-a567-0e02b2c3d487",
+    "name": "Inventory Check",
+    "description": "Conduct a full inventory check of the warehouse",
+    "creationDate": 1699555200,
+    "creator": "d25b4c11-1c3d-4122-a3a1-3d54ab3b1c37",
+    "restrictedTo": ["d25b4c11-1c3d-4122-a3a1-3d54ab3b1c37", "c0e6458c-8462-4b5f-8bfc-f4a47810c267"]
+  },
+  {
+    "uuid": "647ac19b-58cc-4372-a567-0e02b2c3d488",
+    "name": "Budget Review",
+    "description": "Review and adjust the budget for the next quarter",
+    "creationDate": 1699641600,
+    "creator": "c0a6d0a6-2e02-49e4-9c0e-72b1a0b9e1e4",
+    "restrictedTo": ["c0a6d0a6-2e02-49e4-9c0e-72b1a0b9e1e4", "aad3f4ec-8f62-42f4-8bc4-3f876e736f23"]
+  }
+]
