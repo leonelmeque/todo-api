@@ -36,12 +36,21 @@ export class TodoService {
     return undefined;
   }
 
-  deleteTodo(uuid: string): boolean {
+  deleteTodo(uuid: string, userid: string): [string, boolean] {
     const index = this.todos.findIndex(todo => todo.uuid === uuid);
+
     if (index !== -1) {
+      const todo = this.todos[index]
+
+      if(todo.creator !== userid) {
+        return ['No permissions to delete Todo', false]
+      }
+
+
       this.todos.splice(index, 1);
-      return true;
+      return ['Todo was successfully removed', true];
     }
-    return false;
+
+    return ['Todo not found', false];
   }
 }

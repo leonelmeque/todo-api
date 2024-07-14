@@ -50,10 +50,13 @@ export const updateTodo = (req: Request, res: Response) => {
 
 export const deleteTodo = (req: Request, res: Response) => {
   const { id } = req.params;
-  const success = todoService.deleteTodo(id);
+  const { userID } = req.body
+
+  const [message, success] = todoService.deleteTodo(id, userID);
+
   if (success) {
-    res.status(204).json({success});
+    res.status(200).json({message});
   } else {
-    res.status(404).json({ message: 'Todo not found' });
+    res.status(404).json({ message });
   }
 };
