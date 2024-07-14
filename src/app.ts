@@ -3,9 +3,9 @@ import path from  'path'
 import cookieParser from  'cookie-parser'
 import logger from  'morgan'
 
-import indexRouter from './routes/index'
 import usersRouter from './api/user/user.routes'
 import todosRouter from './api/todos/todo.routes'
+import {decodeBasicAuth} from "./middleware/auth.middleware";
 
 let app = express();
 
@@ -18,8 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use(`${API_PREFIX}${API_VERSION}/todos`, todosRouter)
+app.use(`${API_PREFIX}${API_VERSION}/todos`, decodeBasicAuth, todosRouter)
 app.use(`${API_PREFIX}${API_VERSION}/users`, usersRouter)
 
 export default app
