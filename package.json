@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec ts-node src/server.ts"
+    "start": "nodemon --exec ts-node src/server.ts",
+    "prod": "npm run start ./dist/server.js",
+    "build": "tsc"
   },
   "dependencies": {
     "@types/jest": "^29.5.12",
