@@ -1,6 +1,6 @@
 import {User} from "./user.model";
 import path from "path";
-import {promises as fs} from 'fs'
+import { promises as fs } from 'fs'
 
 export class UserService {
   private users: User [] = []
