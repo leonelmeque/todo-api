@@ -4,16 +4,21 @@
   "private": true,
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
-    "prod": "npm run start ./dist/server.js",
+    "prod": "node ./dist/server.js",
     "build": "tsc"
   },
   "dependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.12",
+    "@types/jsonwebtoken": "^9.0.6",
     "@types/uuid": "^10.0.0",
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "^4.19.2",
     "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "nodemon": "^3.1.4",
     "superagent": "^9.0.2",
