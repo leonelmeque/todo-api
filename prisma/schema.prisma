@@ -14,17 +14,31 @@ datasource db {
 }
 
 model User {
-  uuid     String @id @default(uuid())
-  username String @unique
-  password String
-  todos    Todo[]
+  uuid        String       @id @default(uuid())
+  username    String       @unique
+  firstName   String
+  lastName    String
+  password    String
+  age         Int
+  todos       Todo[]
+  viewedTodos TodoViewer[]
 }
 
 model Todo {
-  id          String   @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   description String
-  createdAt   DateTime @default(now())
-  userId      String
-  user        User     @relation(fields: [userId], references: [uuid])
+  createdAt   DateTime     @default(now())
+  creator     User         @relation(references: [uuid], fields: [user_uuid])
+  user_uuid   String
+  viewers     TodoViewer[]
+}
+
+model TodoViewer {
+  todoId String
+  todo   Todo   @relation(fields: [todoId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [uuid])
+
+  @@id([todoId, userId])
 }
