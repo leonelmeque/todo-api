@@ -5,7 +5,9 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
     "prod": "node ./dist/server.js",
-    "build": "tsc && node copyfiles -u 1 src/db/*.json dist/db"
+    "build": "tsc --project tsconfig.json",
+    "test:unit": "jest --silent",
+    "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -37,6 +39,7 @@
     "@types/supertest": "^6.0.2",
     "eslint": "^9.7.0",
     "globals": "^15.8.0",
+    "jest-mock-extended": "^3.0.7",
     "prettier": "^3.3.3",
     "prisma": "^5.17.0",
     "ts-node": "^10.9.2",

@@ -5,4 +5,5 @@ module.exports = {
   transform: {
     "^.+.tsx?$": ["ts-jest",{}],
   },
+  setupFilesAfterEnv: ["<rootDir>/testUtils/singleton.ts", "<rootDir>/testUtils/auth.ts"]
 };
