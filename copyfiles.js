@@ -8,7 +8,7 @@ const copyFile = (source, target) => { const targetDir = path.dirname(target);
 
   fs.copyFileSync(source, target); };
 const assetsPath = path.join(__dirname, 'src', 'db');
-const distPath = path.join(__dirname, 'dist', 'db');
+const distPath = path.join(__dirname, 'dist/src', 'db');
 
 fs.readdirSync(assetsPath)
   .forEach(file => {
