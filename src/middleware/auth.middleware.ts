@@ -45,7 +45,9 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
 
   try {
     const decoded = jwt.verify(token, secretKey) as UserJWT
-    req.body.userId = decoded.userId
+
+    // req.body.userId = decoded.userId
+
     next()
   } catch (err) {
      return res.status(401).json({message: 'Invalid token'})
