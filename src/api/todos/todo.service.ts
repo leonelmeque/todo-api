@@ -1,56 +1,33 @@
-import { Todo } from './todo.model';
-import path from "path";
-import { promises as fs } from 'fs'
+import { createTodo,updateTodo,deleteTodo,findTodoById,findTodoByUserId } from '../../repositories'
 
 export class TodoService {
-  private todos: Todo[] = [];
-  private dbPath: string = path.join(__dirname, '../../', 'db/todos.json')
+  constructor() {}
 
-  constructor() {
-    fs.readFile(this.dbPath).then((data) => {
-      this.todos = JSON.parse(data.toString())
-    })
+  async createTodo(name: string, description: string, creator: string) {
+   return await createTodo({
+     name: name,
+     description: description
+   }, creator)
   }
 
-  createTodo(name: string, description: string, creator: string, restrictedTo: string[]): Todo {
-    const newTodo = new Todo(name, description, creator, restrictedTo);
-    this.todos.push(newTodo);
-    return newTodo;
+  async getTodos(uuid: string) {
+    return findTodoByUserId(uuid)
   }
 
-  getTodos(): Todo[] {
-    return this.todos;
+  async getTodosByUserId(uuid: string) {
+    return findTodoByUserId(uuid)
   }
 
-  getTodoById(uuid: string): Todo | undefined {
-    return this.todos.find(todo => todo.uuid === uuid);
+  async getTodoById(uuid: string) {
+    return findTodoById(uuid)
   }
 
-  updateTodo(uuid: string, name: string, description: string): Todo | undefined {
-    const todo = this.getTodoById(uuid);
-    if (todo) {
-      todo.name = name ?? todo.name;
-      todo.description = description ?? todo.description;
-      return todo;
-    }
-    return undefined;
+  async updateTodo(uuid: string, name: string, description: string) {
+    return updateTodo({name, description, id: uuid})
   }
 
-  deleteTodo(uuid: string, userid: string): [string, boolean] {
-    const index = this.todos.findIndex(todo => todo.uuid === uuid);
-
-    if (index !== -1) {
-      const todo = this.todos[index]
-
-      if(todo.creator !== userid) {
-        return ['No permissions to delete Todo', false]
-      }
-
-
-      this.todos.splice(index, 1);
-      return ['Todo was successfully removed', true];
-    }
-
-    return ['Todo not found', false];
+  async deleteTodo(id: string) {
+     const success = await deleteTodo(id)
+     return !!success
   }
 }

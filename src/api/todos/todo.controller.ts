@@ -1,62 +1,81 @@
 import { Request, Response } from 'express';
 import { TodoService } from './todo.service';
+import { extractPrismaErrorMessage } from '../../utils/prismaClient';
 
 const todoService = new TodoService();
 
-export const createTodo = (req: Request, res: Response) => {
-  const { name, description, creator, restrictedTo } = req.body;
-  const newTodo = todoService.createTodo(name, description, creator, restrictedTo);
-  res.status(201).json(newTodo);
+export const createTodo = async (req: Request, res: Response) => {
+  const { name, description, creator } = req.body;
+  try {
+
+    const newTodo = await todoService.createTodo(name, description, creator);
+    res.status(201).json(newTodo);
+  } catch (e) {
+    console.error(e)
+    const cause = extractPrismaErrorMessage(e)
+    res.status(400).json({message: 'Could not create Todo', cause: cause || ''})
+  }
 };
 
 export const getTodos = (req: Request, res: Response) => {
-  const todos = todoService.getTodos();
-  res.status(200).json(todos);
+  res.status(200).json([]);
 };
 
-export const getTodoById = (req: Request, res: Response) => {
+export const getTodoById = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const todo = todoService.getTodoById(id);
-  if (todo) {
-    res.status(200).json(todo);
-  } else {
-    res.status(404).json({ message: 'Todo not found' });
+
+  try {
+    const todo = await todoService.getTodoById(id)
+
+    if(todo) res.status(200).json(todo)
+    else res.status(404).json({message: 'Todo not found'})
+
+  } catch (e) {
+    console.error(e)
+    const cause = extractPrismaErrorMessage(e)
+    res.status(401).json({message: 'Something went wrong!', cause: cause || ''})
   }
 };
 
-export const getTodoByUserId = (req: Request, res: Response) => {
-  const { userID } = req.body
-  const data = todoService.getTodos()
+export const getTodoByUserId = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.body
+    const data = await todoService.getTodosByUserId(userId)
 
-  const filteredData = data.filter(todo => todo.creator === userID)
+    res.status(200).json(data)
 
-  if(filteredData) {
-    res.status(200).json(filteredData)
-  }else {
-    res.status(404).json({message: 'Something went wrong'})
+  } catch (e) {
+    console.error(e)
+    const cause = extractPrismaErrorMessage(e)
+    res.status(401).json({message: "An error occurred", cause: cause || ''})
   }
 }
 
-export const updateTodo = (req: Request, res: Response) => {
+export const updateTodo = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { name, description } = req.body;
-  const updatedTodo = todoService.updateTodo(id, name, description);
-  if (updatedTodo) {
+  try{
+    const updatedTodo = await todoService.updateTodo(id, name, description);
+
     res.status(200).json(updatedTodo);
-  } else {
-    res.status(404).json({ message: 'Todo not found' });
+
+  }catch (e) {
+    const cause = extractPrismaErrorMessage(e)
+    res.status(401).json({message: "An error occurred", cause: cause || ''})
   }
 };
 
-export const deleteTodo = (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { userID } = req.body
+export const deleteTodo = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const success = await todoService.deleteTodo(id)
 
-  const [message, success] = todoService.deleteTodo(id, userID);
+    if(success) res.status(200).json({message: 'Todo successfully removed'})
+    else res.status(401).json({message: 'Todo could not be deleted'})
+  } catch (e) {
+    console.error(e)
 
-  if (success) {
-    res.status(200).json({message});
-  } else {
-    res.status(404).json({ message });
+    const cause = extractPrismaErrorMessage(e)
+    res.status(401).json({message: "An error occurred", cause: cause || ''})
   }
 };

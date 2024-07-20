@@ -6,14 +6,14 @@ export class Todo {
   description: string;
   creationDate: number;
   creator: string;
-  restrictedTo: string[];
+  viewers: string[];
 
-  constructor(name: string, description: string, creator: string, restrictedTo: string[]) {
+  constructor(name: string, description: string, creator: string, viewers: string[]) {
     this.uuid = uuidv4();
     this.name = name;
     this.description = description;
     this.creationDate = Math.floor(Date.now() / 1000); // Unix timestamp
     this.creator = creator;
-    this.restrictedTo = restrictedTo;
+    this.viewers = viewers;
   }
 }
