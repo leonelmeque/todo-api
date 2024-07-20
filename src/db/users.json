@@ -5,7 +5,7 @@
     "firstName": "John",
     "lastName": "Doe",
     "age": 30,
-    "createdTodos": [
+    "todos": [
       "f47ac10b-58cc-4372-a567-0e02b2c3d479",
       "947ac16b-58cc-4372-a567-0e02b2c3d485"
     ]
@@ -16,7 +16,7 @@
     "firstName": "Jane",
     "lastName": "Smith",
     "age": 25,
-    "createdTodos": [
+    "todos": [
       "c47ac13b-58cc-4372-a567-0e02b2c3d482"
     ]
   },
@@ -26,10 +26,7 @@
     "firstName": "Alice",
     "lastName": "Johnson",
     "age": 35,
-    "createdTodos": [
-      "e47ac11b-58cc-4372-a567-0e02b2c3d480",
-      "847ac17b-58cc-4372-a567-0e02b2c3d486"
-    ]
+    "todos": []
   },
   {
     "uuid": "c0e6458c-8462-4b5f-8bfc-f4a47810c267",
@@ -37,9 +34,7 @@
     "firstName": "Bob",
     "lastName": "Brown",
     "age": 40,
-    "createdTodos": [
-      "b47ac14b-58cc-4372-a567-0e02b2c3d483"
-    ]
+    "todos": []
   },
   {
     "uuid": "7d8f9a8b-3a2b-40b1-91ba-45e564839129",
@@ -47,9 +42,7 @@
     "firstName": "Michael",
     "lastName": "Lee",
     "age": 28,
-    "createdTodos": [
-      "d47ac12b-58cc-4372-a567-0e02b2c3d481"
-    ]
+    "todos": []
   },
   {
     "uuid": "aad3f4ec-8f62-42f4-8bc4-3f876e736f23",
@@ -57,10 +50,7 @@
     "firstName": "Sarah",
     "lastName": "Davis",
     "age": 32,
-    "createdTodos": [
-      "a47ac15b-58cc-4372-a567-0e02b2c3d484",
-      "647ac19b-58cc-4372-a567-0e02b2c3d488"
-    ]
+    "todos": []
   },
   {
     "uuid": "e612b58a-2d72-4b0d-822b-49e8b2d4a03e",
@@ -68,9 +58,7 @@
     "firstName": "Jake",
     "lastName": "White",
     "age": 29,
-    "createdTodos": [
-      "947ac16b-58cc-4372-a567-0e02b2c3d485"
-    ]
+    "todos": []
   },
   {
     "uuid": "df13e37a-4c5c-4b1e-8ec7-2f6173e4e5ab",
@@ -78,9 +66,7 @@
     "firstName": "Emma",
     "lastName": "Clark",
     "age": 27,
-    "createdTodos": [
-      "847ac17b-58cc-4372-a567-0e02b2c3d486"
-    ]
+    "todos": []
   },
   {
     "uuid": "d25b4c11-1c3d-4122-a3a1-3d54ab3b1c37",
@@ -88,9 +74,7 @@
     "firstName": "Lucas",
     "lastName": "Martin",
     "age": 34,
-    "createdTodos": [
-      "747ac18b-58cc-4372-a567-0e02b2c3d487"
-    ]
+    "todos": []
   },
   {
     "uuid": "c0a6d0a6-2e02-49e4-9c0e-72b1a0b9e1e4",
@@ -98,8 +82,6 @@
     "firstName": "Olivia",
     "lastName": "Jones",
     "age": 31,
-    "createdTodos": [
-      "647ac19b-58cc-4372-a567-0e02b2c3d488"
-    ]
+    "todos": []
   }
 ]
