@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
-    "prod": "node ./dist/server.js",
+    "prod": "node ./dist/src/server.js",
     "build": "tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db && npm run prisma:gen",
     "test:unit": "jest --silent",
     "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate"
