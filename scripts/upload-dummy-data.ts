@@ -24,7 +24,8 @@ async function uploadUsers() {
           firstName: user.firstName,
           lastName: user.lastName,
           age: user.age,
-          password: bcrypt.hashSync(user.password)
+          password: bcrypt.hashSync(user.password),
+          markedForDeletionAt: null,
         },
       });
       console.log(`User ${user.username} added successfully.`);
