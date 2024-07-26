@@ -2,27 +2,25 @@
   {
     "uuid": "b7e23ec2-07f2-49a5-b663-99b8a52a4627",
     "username": "john_doe",
+    "password": "12345",
     "firstName": "John",
     "lastName": "Doe",
     "age": 30,
-    "todos": [
-      "f47ac10b-58cc-4372-a567-0e02b2c3d479",
-      "947ac16b-58cc-4372-a567-0e02b2c3d485"
-    ]
+    "todos": []
   },
   {
     "uuid": "9b49c8e8-6c7a-4f19-8d75-8c6b9d1a33b3",
     "username": "jane_smith",
+    "password":  "12345",
     "firstName": "Jane",
     "lastName": "Smith",
     "age": 25,
-    "todos": [
-      "c47ac13b-58cc-4372-a567-0e02b2c3d482"
-    ]
+    "todos": []
   },
   {
     "uuid": "d1c0d5a2-5c2a-45c1-90b2-617d0502a19f",
     "username": "alice_johnson",
+    "password":  "12345",
     "firstName": "Alice",
     "lastName": "Johnson",
     "age": 35,
@@ -31,6 +29,7 @@
   {
     "uuid": "c0e6458c-8462-4b5f-8bfc-f4a47810c267",
     "username": "bob_brown",
+    "password":  "12345",
     "firstName": "Bob",
     "lastName": "Brown",
     "age": 40,
@@ -39,6 +38,7 @@
   {
     "uuid": "7d8f9a8b-3a2b-40b1-91ba-45e564839129",
     "username": "michael_lee",
+    "password":  "12345",
     "firstName": "Michael",
     "lastName": "Lee",
     "age": 28,
@@ -47,6 +47,7 @@
   {
     "uuid": "aad3f4ec-8f62-42f4-8bc4-3f876e736f23",
     "username": "sarah_davis",
+    "password":  "12345",
     "firstName": "Sarah",
     "lastName": "Davis",
     "age": 32,
@@ -55,6 +56,7 @@
   {
     "uuid": "e612b58a-2d72-4b0d-822b-49e8b2d4a03e",
     "username": "jake_white",
+    "password":  "12345",
     "firstName": "Jake",
     "lastName": "White",
     "age": 29,
@@ -63,6 +65,7 @@
   {
     "uuid": "df13e37a-4c5c-4b1e-8ec7-2f6173e4e5ab",
     "username": "emma_clark",
+    "password":  "12345",
     "firstName": "Emma",
     "lastName": "Clark",
     "age": 27,
@@ -71,6 +74,7 @@
   {
     "uuid": "d25b4c11-1c3d-4122-a3a1-3d54ab3b1c37",
     "username": "lucas_martin",
+    "password":  "12345",
     "firstName": "Lucas",
     "lastName": "Martin",
     "age": 34,
@@ -79,6 +83,7 @@
   {
     "uuid": "c0a6d0a6-2e02-49e4-9c0e-72b1a0b9e1e4",
     "username": "olivia_jones",
+    "password":  "12345",
     "firstName": "Olivia",
     "lastName": "Jones",
     "age": 31,

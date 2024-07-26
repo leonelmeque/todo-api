@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import fs from 'fs'
 import path from 'path'
+import bcrypt from 'bcryptjs';
 
 const prisma = new PrismaClient();
 
@@ -23,7 +24,7 @@ async function uploadUsers() {
           firstName: user.firstName,
           lastName: user.lastName,
           age: user.age,
-          password: ''
+          password: bcrypt.hashSync(user.password)
         },
       });
       console.log(`User ${user.username} added successfully.`);
@@ -37,4 +38,6 @@ async function uploadUsers() {
   }
 }
 
-uploadUsers();
+( async ()=> {
+  await  uploadUsers();
+})()
