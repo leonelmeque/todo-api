@@ -5,7 +5,7 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
     "prod": "node ./dist/src/server.js",
-    "build": "tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db && npm run prisma:gen",
+    "build": "npm run prisma:gen && tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
     "test:unit": "jest --silent",
     "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate"
   },
