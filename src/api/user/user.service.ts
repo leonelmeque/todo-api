@@ -1,44 +1,37 @@
-import {User} from "./user.model";
-import path from "path";
-import { promises as fs } from 'fs'
+import { User } from "./user.model";
+import { UserDTO } from './user.dto';
+import { userRepository } from '../../repositories/'
 
 export class UserService {
-  private users: User [] = []
-  private dbPath: string = path.join(__dirname, '../../', 'db/users.json')
 
-  constructor() {
-    fs.readFile(this.dbPath).then((data) => {
-      this.users = JSON.parse(data.toString())
+  constructor() {}
+
+  async createUser(user: Omit<UserDTO, 'uuid'>) {
+    return userRepository.createUser({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      username: user.username,
+      password: user.password,
+      age: user.age,
     })
   }
 
-  getUsers(): User[] {
-    return this.users
+  async getUserById(uuid: string) {
+    return userRepository.findUserById(uuid)
   }
 
-  createUser({ username, firstName, lastName,age}: Omit<User, 'createdTodos'| 'uuid'>) {
-    const newUser = new User(username, firstName,lastName,age)
-    this.users.push(newUser)
-    return newUser
+  async deleteUserById(uuid: string, scheduleDeletion = true) {
+    if(scheduleDeletion) return userRepository.scheduleDeletion(uuid)
+    return userRepository.deleteUserById(uuid)
   }
 
-  getUserById(uuid: string): User | undefined {
-    return this.users.find(user=> user.uuid === uuid)
+  async updateUser(uuid: string, newUserData: Partial<User>) {
+    return userRepository.updateUserById(uuid, {
+      ...newUserData as unknown as Parameters<typeof userRepository.updateUserById>[1]
+    })
   }
 
-  deleteUserById(uuid: string): boolean {
-    const index = this.users.findIndex(user => user.uuid == uuid)
-
-    if(index !== -1) {
-      this.users.splice(index, 1)
-      return true
-    }
-
-    return false
-  }
-
-  updateUser(newUserData: User): User {
-    const prevUser = this.users.find((user) => user.uuid === newUserData.uuid)
-    return {...prevUser, ...newUserData}
+  async findUserById(uuid: string) {
+    return userRepository.findUserById(uuid)
   }
 }
