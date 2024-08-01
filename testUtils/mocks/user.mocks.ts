@@ -7,5 +7,6 @@ export const mockedUser: User = {
   firstName: 'testFirstName',
   uuid: 'testUUID',
   password: 'testPassword',
-  age: 21
+  age: 21,
+  markedForDeletionAt: null,
 }
