@@ -58,7 +58,9 @@ export const updateUserById = (uuid: string, payload: Prisma.UserUpdateInput) =>
       data: {
         ...payload
       }, select: {
-        password: false
+        firstName: true,
+        lastName: true,
+        age: true,
       }
     })
 }
