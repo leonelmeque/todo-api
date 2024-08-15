@@ -1,8 +1,11 @@
 import cron from 'node-cron';
 import {prismaClient} from '../utils/prismaClient';
 
-cron.schedule('* * * * *', async () => {
-  console.log('Sniffing for data removal requests')
+cron.schedule('0 */12 * * *', async () => {
+
+  const runningJobAt = Intl.DateTimeFormat('en', {dateStyle: 'medium'}).format(Date.now())
+
+  console.log('Sniffing for data removal requests - time: ' + runningJobAt)
 
   const oneMinuteAgo = new Date(Date.now() - 60000)
   const usersToDelete = await prismaClient.user.findMany({
