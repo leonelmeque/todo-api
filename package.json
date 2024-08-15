@@ -8,13 +8,13 @@
     "build": "npm run prisma:gen && tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
     "build:ci": "tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
     "test:unit": "jest --silent",
-    "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate"
+    "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate",
+    "action:local": "act --secret-file=my.secrets --privileged --container-architecture=linux/amd64 push --container-daemon-socket -"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
