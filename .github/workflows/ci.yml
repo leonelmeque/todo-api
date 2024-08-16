@@ -44,8 +44,9 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: ${{ hashFiles('package-lock.json') }}
-
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -93,7 +94,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: ${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-
 
       - name: Run prisma migrations
         run: |
@@ -126,7 +127,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ./node_modules
-          key: ${{ hashFiles('package-lock.json') }}
+          key: ${{ runner.os }}-node-modules-
 
       - name: Run prisma migrations
         run: npx prisma migrate dev --name init
