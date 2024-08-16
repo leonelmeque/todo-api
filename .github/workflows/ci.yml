@@ -20,6 +20,7 @@ jobs:
       - name: List files in the root directory
         run: |
           ls -la
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
 
   deps:
     runs-on: ubuntu-latest
@@ -75,7 +76,7 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
-          - 5432:5433
+          - 5432:5432
         options: >-
           --health-cmd "pg_isready -U ${{ secrets.POSTGRES_USER }} -d ${{ secrets.POSTGRES_DB }}"
           --health-interval 10s
