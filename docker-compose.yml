@@ -1,0 +1,42 @@
+services:
+  db:
+    image: postgres:14
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+        POSTGRES_USER: "${POSTGRES_USER}"
+        POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+        POSTGRES_DB: "${POSTGRES_DB}"
+    ports:
+      - "${POSTGRES_HOST}:${POSTGRES_HOST}"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
+    image: node:20
+    env_file:
+      - .env
+    build: .
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "${DATABASE_URL}"
+      NODE_ENV: "${ENV}"
+      PORT: "${APP_PORT}"
+    volumes:
+      - .:/app
+    command: >
+      bash -c "
+        while ! nc -z db 5432; do
+          echo 'Waiting for database...';
+          sleep 3;
+        done;
+        npm run prisma:gen && npm run prod
+      "
+
+
+volumes:
+    postgres-data:
