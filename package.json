@@ -5,11 +5,13 @@
   "scripts": {
     "start": "nodemon --exec ts-node src/server.ts",
     "prod": "node ./dist/src/server.js",
-    "build": "npm run prisma:gen && tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
+    "build": "rm -rf ./dist && tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
     "build:ci": "tsc --project tsconfig.json && node copyfiles -u 1 src/db/*.json dist/db",
     "test:unit": "jest --silent",
     "prisma:gen": "npx prisma migrate dev --name init && npx prisma generate",
-    "action:local": "act --secret-file=my.secrets --privileged --container-architecture=linux/amd64 push --container-daemon-socket -"
+    "action:local": "act --secret-file=my.secrets --privileged --container-architecture=linux/amd64 push --container-daemon-socket -",
+    "docker:build-db": "docker-compose -f docker-compose-db.yml up -d",
+    "docker:build-app": "docker-compose -f docker-compose-app.yml up -d"
   },
   "dependencies": {
     "@prisma/client": "^5.17.0",
@@ -21,11 +23,13 @@
     "node-cron": "^3.0.3",
     "nodemon": "^3.1.4",
     "pg": "^8.12.0",
+
     "superagent": "^9.0.2",
     "supertest": "^7.0.0",
     "uuid": "^10.0.0"
   },
   "devDependencies": {
+    "rimraf": "^6.0.1",
     "@eslint/js": "^9.7.0",
     "@types/bcrypt": "^5.0.2",
     "@types/bcryptjs": "^2.4.6",
